@@ -46,6 +46,12 @@ public class Homework {
     private static final String INSERT_GROUP_UNIVERSITY_SQL = "insert into " +
             "group_university(name, id_curator)" +
             "values (?, ?);";
+    private static final String SELECT_STUDENT_CURATORS_SQL = "select s.fio as student_fio, " +
+            "c.fio as curator_fio, gu.name as group_name" +
+            " from student s" +
+            "         join group_university gu on gu.id = s.id_group" +
+            "         join curator c on c.id = gu.id_curator;";
+
 
     public void createCuratorTable(Connection connection) throws SQLException {
         Statement statement = connection.createStatement();
@@ -94,13 +100,27 @@ public class Homework {
         try (PreparedStatement preparedStatement = connection.prepareStatement(INSERT_STUDENTS_SQL)) {
             for (int i = 0; i < 15; i++) {
                 preparedStatement.setString(1, RandomStringUtils.randomAlphabetic(20));
-                preparedStatement.setString(2, i % 2 == 0 ? "М" :"Ж");
+                preparedStatement.setString(2, i % 2 == 0 ? "М" : "Ж");
                 preparedStatement.setInt(3, i % 3 + 1);
                 int insertN = preparedStatement.executeUpdate();
                 System.out.println("количество вставленных строк: " + insertN);
             }
         } catch (SQLException exception) {
             System.out.println("вызывайте срочно разработчиков: " + exception);
+        }
+    }
+
+    public void selectStudentsCuratorsData(Connection connection) {
+        try (final Statement statement = connection.createStatement();
+             final ResultSet resultSet = statement.executeQuery(SELECT_STUDENT_CURATORS_SQL)) {
+            while (resultSet.next()) {
+                final String studentFio = resultSet.getString("student_fio");
+                final String curatorFio = resultSet.getString("curator_fio");
+                final String groupName = resultSet.getString("group_name");
+                System.out.println(studentFio + " " + curatorFio + " " + groupName);
+            }
+        } catch (SQLException exception) {
+            System.out.println("вызывайте срочно разработчиков select!!!: " + exception);
         }
     }
 
@@ -113,6 +133,7 @@ public class Homework {
             homework.createStudentTable(connection);
             homework.insertCurators(connection);
             homework.insertStudentsSql(connection);
+            homework.selectStudentsCuratorsData(connection);
         } catch (Exception exception) {
             System.out.println("вызывайте срочно разработчиков " + exception);
 
