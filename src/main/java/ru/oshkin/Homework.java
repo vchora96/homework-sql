@@ -1,7 +1,9 @@
 package ru.oshkin;
 
 import org.apache.commons.lang3.RandomStringUtils;
+
 import java.sql.*;
+
 import static ru.oshkin.SqlHelper.*;
 
 public class Homework {
@@ -32,7 +34,7 @@ public class Homework {
                 System.out.println("количество вставленных строк: " + insertN);
             }
         } catch (SQLException exception) {
-            System.out.println("вызывайте срочно разработчиков: " + exception);
+            System.out.println("вызывайте срочно разработчиков insertCurators: " + exception);
         }
     }
 
@@ -45,7 +47,7 @@ public class Homework {
                 System.out.println("количество вставленных строк: " + insertN);
             }
         } catch (SQLException exception) {
-            System.out.println("вызывайте срочно разработчиков: " + exception);
+            System.out.println("вызывайте срочно разработчиков, insertGroupUniversitySql: " + exception);
         }
     }
 
@@ -59,7 +61,7 @@ public class Homework {
                 System.out.println("количество вставленных строк: " + insertN);
             }
         } catch (SQLException exception) {
-            System.out.println("вызывайте срочно разработчиков: " + exception);
+            System.out.println("вызывайте срочно разработчиков, insertStudentsSql: " + exception);
         }
     }
 
@@ -73,7 +75,7 @@ public class Homework {
                 System.out.println(studentFio + " " + curatorFio + " " + groupName);
             }
         } catch (SQLException exception) {
-            System.out.println("вызывайте срочно разработчиков select!!!: " + exception);
+            System.out.println("вызывайте срочно разработчиков, selectStudentsCuratorsData: " + exception);
         }
     }
 
@@ -89,7 +91,7 @@ public class Homework {
                 System.out.println("количество студентов = " + cnt);
             }
         } catch (SQLException exception) {
-            System.out.println("вызывайте срочно разработчиков select!?!: " + exception);
+            System.out.println("вызывайте срочно разработчиков, selectCountStudentSql: " + exception);
         }
     }
 
@@ -161,9 +163,9 @@ public class Homework {
             Homework homework = new Homework();
             homework.createCuratorTable(connection);
             homework.createGroupTable(connection);
+            homework.insertCurators(connection);
             homework.insertGroupUniversitySql(connection);
             homework.createStudentTable(connection);
-            homework.insertCurators(connection);
             homework.insertStudentsSql(connection);
             homework.selectStudentsCuratorsData(connection);
             homework.selectCountStudentSql(connection);

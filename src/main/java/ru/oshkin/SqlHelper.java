@@ -8,28 +8,25 @@ public class SqlHelper {
     static final String CREATE_GROUP_UNIVERSITY_SQL =
             "create table if not exists group_university" +
                     "(" +
-                    "    id         bigserial," +
+                    "    id         bigserial primary key," +
                     "    name       varchar(30) not null," +
                     "    id_curator bigserial," +
-                    "    primary key (id)," +
                     "    foreign key (id_curator) references curator (id)" +
                     ");";
 
     static final String CREATE_CURATOR_SQL =
             "create table  if not exists curator" +
                     "(" +
-                    "    id  bigserial," +
-                    "    fio varchar(30)," +
-                    "    primary key (id)" +
+                    "    id  bigserial primary key," +
+                    "    fio varchar(30)" +
                     ");";
     static final String CREATE_STUDENT_SQL =
             "create table if not exists student" +
                     "(" +
-                    "    id       bigserial," +
+                    "    id       bigserial primary key," +
                     "    fio      varchar(30) not null," +
                     "    sex      varchar(1)  not null," +
                     "    id_group bigserial," +
-                    "    primary key (id)," +
                     "    foreign key (id_group) references group_university (id)" +
                     "" +
                     ");";
